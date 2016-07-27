@@ -2,9 +2,9 @@ import React from 'react'
 import Texts from './Texts'
 
 const App = () => (
-    <div>
+  <div>
     <Texts />
-    </div>
-    )
+  </div>
+)
 
 export default App

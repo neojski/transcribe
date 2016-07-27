@@ -2,7 +2,7 @@ import { combineReducers } from 'redux'
 import texts from './texts'
 
 const app = combineReducers({
-  texts
+  texts,
 })
 
 export default app

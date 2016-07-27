@@ -10,22 +10,25 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onClick: (id) => {
-      dispatch(addText())
+    onClick: (text) => {
+      let rand = Math.random() * 10;
+      dispatch(addText('asdf' + rand, rand, rand * 2))
     }
   }
 }
 
 const TodoList = ({ texts, onClick }) => (
   <ul>
-    {texts.map(text => <div onClick={() => onClick('new text')}>{text}</div>)}
+    {texts.map(line =>
+      <div key={line.start} onClick={() => onClick('new text')}>{line.text} ({line.start} - {line.end})</div>
+    )}
   </ul>
 )
 
 
 const VisibleTodoList = connect(
-    mapStateToProps,
-    mapDispatchToProps
-    )(TodoList)
+  mapStateToProps,
+  mapDispatchToProps
+)(TodoList)
 
 export default VisibleTodoList

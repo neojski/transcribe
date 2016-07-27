@@ -1,6 +1,8 @@
-export const addText = (text) => {
+export const addText = (text, start, end) => {
   return {
     type: 'ADD_TEXT',
-    text
+    text,
+    start,
+    end
   }
 }
