@@ -2,7 +2,7 @@ import React from 'react'
 import { render } from 'react-dom'
 import { Provider } from 'react-redux'
 import { createStore } from 'redux'
-import { tick, setMode } from './actions'
+import { tick, setMode, togglePlayPause } from './actions'
 import todoApp from './reducers'
 import App from './components/App'
 import Mousetrap from 'mousetrap'
@@ -17,6 +17,12 @@ Mousetrap.bind('i', function () {
 
 Mousetrap.bind('esc', function () {
   store.dispatch(setMode('NORMAL'));
+});
+
+Mousetrap.bind('space', function () {
+  if (store.getState().mode === 'NORMAL') {
+    store.dispatch(togglePlayPause(store.getState().video));
+  }
 });
 
 

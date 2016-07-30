@@ -33,3 +33,11 @@ export const pause = () => {
     type: 'PAUSE',
   };
 }
+
+export const togglePlayPause = (video) => {
+  if (video.isPlaying) {
+    return pause();
+  } else {
+    return play();
+  }
+}
