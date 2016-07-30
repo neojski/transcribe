@@ -1,8 +1,14 @@
 import { combineReducers } from 'redux'
-import texts from './texts'
+import chunks from './chunks'
+import current from './current'
+import video from './video'
+import mode from './mode'
 
 const app = combineReducers({
-  texts,
+  chunks,
+  current,
+  video,
+  mode,
 })
 
 export default app

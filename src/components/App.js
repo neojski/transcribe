@@ -1,9 +1,9 @@
 import React from 'react'
-import Texts from './Texts'
+import Chunks from './Chunks'
 
 const App = () => (
   <div>
-    <Texts />
+    <Chunks />
   </div>
 )
 

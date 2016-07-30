@@ -1,6 +1,11 @@
-const texts = (state = [{text: 'text', start: 0, end: 1}], action) => {
+let nextId = 0;
+
+let createChunk = function ({ data, start, end }) {
+  return { id: nextId++, data, start, end };
+};
+const texts = (state = [createChunk ({data: 'text', start: 0, end: 1})], action) => {
   switch (action.type) {
-    case 'ADD_TEXT':
+    case 'ADD_CHUNK':
       let start = action.start;
       let i;
       for (i = 0; i < state.length; i++) {
@@ -10,9 +15,7 @@ const texts = (state = [{text: 'text', start: 0, end: 1}], action) => {
       }
       return [
         ...state.slice(0, i),
-        { text: action.text,
-          start: action.start,
-          end: action.end },
+        createChunk (action),
         ...state.slice(i)
       ]
     default:
