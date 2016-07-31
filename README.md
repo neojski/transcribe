@@ -13,8 +13,12 @@ Then open `src/index.html` in your browser. For now you can only easily rewind v
 
 Intended usage:
 - <kbd>space</kbd> - play
+- <kbd>m</kbd> for setting start of current interval to now (to skip moments of silence from replay)
 - wait for one sentence
 - <kbd>space</kbd> - pause
 - read it out loud
-- <kbd>r</kbd> if you missed something. It'll replay the whole interval
-- continue with <kbd>space</kbd> to start new interval
+- <kbd>r</kbd> if you missed something. It'll replay the whole interval since your last <kbd>m</kbd>
+- if you got it, hit <kbd>c</kbd> to commit and continue
+
+## TODO
+Insert mode to actually write the transcriptions down.

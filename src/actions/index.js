@@ -81,3 +81,12 @@ export const replay = () => {
     dispatch(playInside());
   }
 }
+
+export const commit = () => {
+  return (dispatch, getState) => {
+    let current = getState().current;
+
+    dispatch(setStart(current.end));
+    dispatch(play());
+  }
+}

@@ -2,7 +2,7 @@ import React from 'react'
 import { render } from 'react-dom'
 import { Provider } from 'react-redux'
 import { createStore, applyMiddleware } from 'redux'
-import { tick, setMode, setStart, setEnd, setNoEnd, replay, play, pause } from './actions'
+import { tick, setMode, setStart, setEnd, setNoEnd, replay, play, pause, commit } from './actions'
 import todoApp from './reducers'
 import App from './components/App'
 import Mousetrap from 'mousetrap'
@@ -55,6 +55,10 @@ let store = createStore(todoApp, applyMiddleware(thunk));
 
   normal('r', () => {
     dispatch(replay());
+  });
+
+  normal('c', () => {
+    dispatch(commit());
   });
 })();
 
