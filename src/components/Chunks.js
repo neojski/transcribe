@@ -20,8 +20,8 @@ const mapDispatchToProps = (dispatch) => {
         current
       }))
     },
-    tick: (time) => {
-      dispatch(tick(time));
+    tick: (currentTime) => {
+      dispatch(tick(currentTime));
     },
     play: () => {
       dispatch(play());
@@ -35,7 +35,7 @@ const mapDispatchToProps = (dispatch) => {
 const Chunks = ({ mode, video, chunks, current, onClick, tick, play, pause }) => (
   <div>
     <div>mode: {mode}</div>
-    <div>{video.time}</div>
+    <div>{video.currentTime}</div>
     <div onClick={play}>play</div>
     <div onClick={pause}>pause</div>
     <ul>
@@ -43,7 +43,10 @@ const Chunks = ({ mode, video, chunks, current, onClick, tick, play, pause }) =>
         <div key={chunk.id} onClick={() => onClick(current, 'new text')}>{chunk.data} ({chunk.start} - {chunk.end})</div>
       )}
     </ul>
-    <Video tick={tick} isPlaying={video.isPlaying} />
+    <Video pause={pause} play={play} tick={tick} isPlaying={video.isPlaying} startTime={current.start} endTime={current.end} rewindActionId={video.rewindActionId} />
+    <div className="current">
+      {current.start} - {current.end}
+    </div>
   </div>
 );
 

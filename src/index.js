@@ -1,29 +1,62 @@
 import React from 'react'
 import { render } from 'react-dom'
 import { Provider } from 'react-redux'
-import { createStore } from 'redux'
-import { tick, setMode, togglePlayPause } from './actions'
+import { createStore, applyMiddleware } from 'redux'
+import { tick, setMode, togglePlayPause, setStart, setEnd, setNoEnd, replay, play, pause } from './actions'
 import todoApp from './reducers'
 import App from './components/App'
 import Mousetrap from 'mousetrap'
+import thunk from 'redux-thunk'
 
-let store = createStore(todoApp);
+let store = createStore(todoApp, applyMiddleware(thunk));
 
-Mousetrap.bind('i', function () {
-  if (store.getState().mode === 'NORMAL') {
-    store.dispatch(setMode('INSERT'));
-  }
-});
+(function () {
+  let dispatch = store.dispatch;
 
-Mousetrap.bind('esc', function () {
-  store.dispatch(setMode('NORMAL'));
-});
+  // keybinding
+  let normal = function (combo, f) {
+    Mousetrap.bind(combo, function () {
+      if (store.getState().mode === 'NORMAL') {
+        f();
+      }
+    });
+  };
 
-Mousetrap.bind('space', function () {
-  if (store.getState().mode === 'NORMAL') {
-    store.dispatch(togglePlayPause(store.getState().video));
-  }
-});
+  let insert = function (combo, f) {
+    Mousetrap.bind(combo, function () {
+      if (store.getState().mode === 'INSERT') {
+        f();
+      }
+    });
+  };
+
+  insert('esc', () => {
+    dispatch(setMode('NORMAL'));
+  });
+
+  normal('i', () => {
+    dispatch(setMode('INSERT'));
+  });
+
+  normal('space', () => {
+    let state = store.getState();
+
+    if (state.video.isPlaying) {
+      dispatch(setEnd(state.video.currentTime));
+      dispatch(pause());
+    } else {
+      dispatch(play());
+    }
+  });
+
+  normal('m', () => {
+    dispatch(setStart(store.getState().video.currentTime));
+  });
+
+  normal('r', () => {
+    dispatch(replay());
+  });
+})();
 
 
 render(

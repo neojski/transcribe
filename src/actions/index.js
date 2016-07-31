@@ -9,10 +9,11 @@ export const addChunk = ({data, current}) => {
   };
 }
 
-export const tick = (time) => {
+export const tick = (currentTime) => {
+  console.log(currentTime);
   return {
     type: 'TICK',
-    time
+    currentTime
   };
 }
 
@@ -22,10 +23,38 @@ export const setMode = (type) => {
   };
 }
 
-export const play = () => {
+export const setStart = (time) => {
   return {
-    type: 'PLAY',
+    type: 'SET_START',
+    time,
   };
+}
+
+export const setEnd = (time) => {
+  return {
+    type: 'SET_END',
+    time,
+  };
+}
+
+
+export const setNoEnd = () => {
+  return {
+    type: 'SET_END',
+    time: Number.MAX_SAFE_INTEGER,
+  };
+}
+
+export const play = () => {
+  return (dispatch, getState) => {
+    let state = getState();
+    if (state.video.currentTime >= state.current.end) {
+      dispatch(setNoEnd());
+    }
+    dispatch({
+      type: 'PLAY'
+    });
+  }
 }
 
 export const pause = () => {
@@ -39,5 +68,22 @@ export const togglePlayPause = (video) => {
     return pause();
   } else {
     return play();
+  }
+}
+
+let id = 0;
+export const rewind = () => {
+  return {
+    type: 'REWIND',
+    id: id++,
+  };
+}
+
+export const replay = () => {
+  return (dispatch) => {
+    dispatch(rewind());
+    dispatch({
+      type: 'PLAY'
+    });
   }
 }
