@@ -9,10 +9,9 @@ export const addChunk = ({data, current}) => {
   };
 }
 
-export const tick = (currentTime) => {
-  console.log(currentTime);
+export const setCurrentTime = (currentTime) => {
   return {
-    type: 'TICK',
+    type: 'CURRENT_TIME',
     currentTime
   };
 }
@@ -67,17 +66,10 @@ export const pause = () => {
   };
 }
 
-let id = 0;
-export const rewind = () => {
-  return {
-    type: 'REWIND',
-    id: id++,
-  };
-}
-
 export const replay = () => {
-  return (dispatch) => {
-    dispatch(rewind());
+  return (dispatch, getState) => {
+    let currentTime = getState().current.start;
+    dispatch(setCurrentTime(currentTime));
     dispatch(playInside());
   }
 }

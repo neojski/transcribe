@@ -20,10 +20,12 @@ export class Video extends React.Component {
     if (currentTime === null) {
       return;
     }
-    console.log(currentTime, this.props.endTime);
-    if (currentTime > this.props.endTime) {
+    if (currentTime >= this.props.endTime) {
+      currentTime = this.props.endTime;
+      this._player.seekTo(this.props.endTime, true);
       this.props.pause();
     }
+    this._currentTime = currentTime;
     this.props.tick(currentTime);
   }
   startTicking () {
@@ -35,7 +37,6 @@ export class Video extends React.Component {
     clearInterval(this._interval);
   }
   componentWillReceiveProps (props) {
-    console.log('receive props');
     if (!this._player) {
       return alert('Player not ready');
     }
@@ -46,10 +47,10 @@ export class Video extends React.Component {
       this._player.pauseVideo();
       this.stopTicking();
     }
-    // setting new start time seeks the video
-    if (props.rewindActionId !== this._lastRewindActionId) {
-      this._lastRewindActionId = props.rewindActionId;
-      this._player.seekTo(props.startTime, true);
+    // Setting new current time seeks the video
+    if (this._currentTime !== props.currentTime) {
+      this._currentTime = props.currentTime;
+      this._player.seekTo(props.currentTime, true);
     }
   }
 

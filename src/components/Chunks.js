@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { addChunk, tick, play, pause } from '../actions'
+import { addChunk, setCurrentTime, play, pause } from '../actions'
 import { Video } from './Video'
 
 const mapStateToProps = (state) => {
@@ -20,8 +20,8 @@ const mapDispatchToProps = (dispatch) => {
         current
       }))
     },
-    tick: (currentTime) => {
-      dispatch(tick(currentTime));
+    setCurrentTime: (currentTime) => {
+      dispatch(setCurrentTime(currentTime));
     },
     play: () => {
       dispatch(play());
@@ -32,7 +32,7 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-const Chunks = ({ mode, video, chunks, current, onClick, tick, play, pause }) => (
+const Chunks = ({ mode, video, chunks, current, onClick, setCurrentTime, play, pause }) => (
   <div>
     <div>mode: {mode}</div>
     <div>{video.currentTime}</div>
@@ -43,7 +43,7 @@ const Chunks = ({ mode, video, chunks, current, onClick, tick, play, pause }) =>
         <div key={chunk.id} onClick={() => onClick(current, 'new text')}>{chunk.data} ({chunk.start} - {chunk.end})</div>
       )}
     </ul>
-    <Video pause={pause} play={play} tick={tick} isPlaying={video.isPlaying} startTime={current.start} endTime={current.end} rewindActionId={video.rewindActionId} />
+    <Video pause={pause} play={play} tick={setCurrentTime} isPlaying={video.isPlaying} startTime={current.start} endTime={current.end} currentTime={video.currentTime} />
     <div className="current">
       {current.start} - {current.end}
     </div>
