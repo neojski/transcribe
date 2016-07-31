@@ -64,6 +64,7 @@ export class Video extends React.Component {
 
   handleReady (e) {
     this._player = e.target;
+    this.props.duration(this._player.getDuration());
   }
 
   render () {
@@ -75,7 +76,7 @@ export class Video extends React.Component {
     };
     return <div>
       <div>isPlaying: {this.props.isPlaying ? 'yes' : 'no'}</div>
-      <YouTube videoId="M7lc1UVf-VE" opts={opts} onReady={this.handleReady.bind(this)} />
+      <YouTube videoId="hn67qSL6sJE" opts={opts} onReady={this.handleReady.bind(this)} />
     </div>
   }
 }

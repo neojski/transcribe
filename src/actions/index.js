@@ -82,3 +82,10 @@ export const commit = () => {
     dispatch(play());
   }
 }
+
+export const setDuration = (duration) => {
+  return {
+    type: 'SET_DURATION',
+    duration,
+  };
+}
