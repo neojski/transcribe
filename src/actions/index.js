@@ -45,15 +45,19 @@ export const setNoEnd = () => {
   };
 }
 
+export const playInside = () => {
+  return {
+    type: 'PLAY'
+  };
+}
+
 export const play = () => {
   return (dispatch, getState) => {
     let state = getState();
     if (state.video.currentTime >= state.current.end) {
       dispatch(setNoEnd());
     }
-    dispatch({
-      type: 'PLAY'
-    });
+    dispatch(playInside());
   }
 }
 
@@ -61,14 +65,6 @@ export const pause = () => {
   return {
     type: 'PAUSE',
   };
-}
-
-export const togglePlayPause = (video) => {
-  if (video.isPlaying) {
-    return pause();
-  } else {
-    return play();
-  }
 }
 
 let id = 0;
@@ -82,8 +78,6 @@ export const rewind = () => {
 export const replay = () => {
   return (dispatch) => {
     dispatch(rewind());
-    dispatch({
-      type: 'PLAY'
-    });
+    dispatch(playInside());
   }
 }
