@@ -77,6 +77,7 @@ export const replay = () => {
 export const commit = () => {
   return (dispatch, getState) => {
     let current = getState().current;
+    dispatch(addChunk({data: 'add-data', current}));
 
     dispatch(setStart(current.end));
     dispatch(play());

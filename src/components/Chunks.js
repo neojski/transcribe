@@ -1,7 +1,8 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { addChunk, setCurrentTime, play, pause, setDuration } from '../actions'
+import { addChunk, setCurrentTime, play, pause, setDuration, setStart, setEnd, replay } from '../actions'
 import { Video } from './Video'
+import Chunk from './Chunk'
 
 const mapStateToProps = (state) => {
   return {
@@ -31,13 +32,28 @@ const mapDispatchToProps = (dispatch) => {
     },
     setDuration: (duration) => {
       dispatch(setDuration(duration));
-    }
+    },
+    setStart: (time) => {
+      dispatch(setStart(time));
+    },
+    setEnd: (time) => {
+      dispatch(setEnd(time));
+    },
+    replay: () => {
+      dispatch(replay());
+    },
   }
 }
 
-const Chunks = ({ mode, video, chunks, current, onClick, setCurrentTime, play, pause, setDuration }) => {
+const Chunks = ({ mode, video, chunks, current, onClick, setCurrentTime, play, pause, setDuration, setStart, setEnd, replay }) => {
   let calc = (time) => {
     return video.duration ? (time / video.duration) * 100 + '%' : 0
+  };
+
+  let clickChunk = ({start, end}) => {
+    setStart(start);
+    setEnd(end);
+    replay();
   };
 
   return <div>
@@ -51,7 +67,7 @@ const Chunks = ({ mode, video, chunks, current, onClick, setCurrentTime, play, p
     <div onClick={pause}>pause</div>
     <ul>
       {chunks.map(chunk =>
-        <div key={chunk.id} onClick={() => onClick(current, 'new text')}>{chunk.data} ({chunk.start} - {chunk.end})</div>
+        <Chunk key={chunk.id} data={chunk.data} start={chunk.start} end={chunk.end} onClick={clickChunk} />
       )}
     </ul>
     <Video pause={pause} duration={setDuration} play={play} tick={setCurrentTime} isPlaying={video.isPlaying} startTime={current.start} endTime={current.end} currentTime={video.currentTime} />

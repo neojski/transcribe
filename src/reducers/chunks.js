@@ -3,7 +3,13 @@ let nextId = 0;
 let createChunk = function ({ data, start, end }) {
   return { id: nextId++, data, start, end };
 };
-const texts = (state = [createChunk ({data: 'text', start: 0, end: 1})], action) => {
+
+let initialState = [
+  createChunk ({data: 'text1', start: 0, end: 1}),
+  createChunk ({data: 'text2', start: 1, end: 2}),
+  createChunk ({data: 'text3', start: 2, end: 3}),
+];
+const texts = (state = initialState, action) => {
   switch (action.type) {
     case 'ADD_CHUNK':
       let start = action.start;
