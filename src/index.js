@@ -5,8 +5,12 @@ import { createStore, applyMiddleware } from 'redux'
 import { setMode, setStart, setEnd, setNoEnd, replay, play, pause, commit } from './actions'
 import todoApp from './reducers'
 import App from './components/App'
-import Mousetrap from 'mousetrap'
+import key from 'keymaster'
 import thunk from 'redux-thunk'
+
+key.filter = function () {
+  return true;
+}
 
 let store = createStore(todoApp, applyMiddleware(thunk));
 
@@ -15,17 +19,17 @@ let store = createStore(todoApp, applyMiddleware(thunk));
 
   // keybinding
   let normal = function (combo, f) {
-    Mousetrap.bind(combo, function () {
+    key(combo, function (e) {
       if (store.getState().mode === 'NORMAL') {
-        f();
+        f(e);
       }
     });
   };
 
   let insert = function (combo, f) {
-    Mousetrap.bind(combo, function () {
+    key(combo, function (e) {
       if (store.getState().mode === 'INSERT') {
-        f();
+        f(e);
       }
     });
   };
@@ -34,11 +38,13 @@ let store = createStore(todoApp, applyMiddleware(thunk));
     dispatch(setMode('NORMAL'));
   });
 
-  normal('i', () => {
+  normal('i', (e) => {
+    e.preventDefault();
     dispatch(setMode('INSERT'));
   });
 
-  normal('space', () => {
+  normal('space', (e) => {
+    e.preventDefault();
     let state = store.getState();
 
     if (state.video.isPlaying) {

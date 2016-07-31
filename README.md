@@ -16,9 +16,7 @@ Intended usage:
 - <kbd>m</kbd> for setting start of current interval to now (to skip moments of silence from replay)
 - wait for one sentence
 - <kbd>space</kbd> - pause
-- read it out loud
+- <kbd>i</kbd> - enter insert mode - input what you've just heard
+- <kbd>esc</kbd> - to enter normal mode
 - <kbd>r</kbd> if you missed something. It'll replay the whole interval since your last <kbd>m</kbd>
-- if you got it, hit <kbd>c</kbd> to commit and continue
-
-## TODO
-Insert mode to actually write the transcriptions down.
+- if you got it, hit <kbd>c</kbd> to commit current chunk and continue

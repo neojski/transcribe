@@ -10,7 +10,7 @@
   "author": "Tomasz Kołodziejski <tkolodziejski@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "mousetrap": "^1.6.0",
+    "keymaster": "^1.6.2",
     "react": "^15.2.1",
     "react-dom": "^15.2.1",
     "react-redux": "^4.4.5",

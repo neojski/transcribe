@@ -1,11 +1,9 @@
-export const addChunk = ({data, current}) => {
-  let start = current.start;
-  let end = current.end;
+export const addChunk = (current) => {
   return {
     type: 'ADD_CHUNK',
-    data,
-    start,
-    end
+    data: current.data,
+    start: current.start,
+    end: current.end
   };
 }
 
@@ -74,11 +72,19 @@ export const replay = () => {
   }
 }
 
+export const setCurrentData = (data) => {
+  return {
+    type: 'SET_CURRENT_DATA',
+    data,
+  };
+};
+
 export const commit = () => {
   return (dispatch, getState) => {
     let current = getState().current;
-    dispatch(addChunk({data: 'add-data', current}));
 
+    dispatch(addChunk(current));
+    dispatch(setCurrentData(''));
     dispatch(setStart(current.end));
     dispatch(play());
   }
